@@ -1,29 +1,35 @@
-// ─────────────────────────────────────────────────────────────
-// EJEMPLO DE USO ADC
-// Inicializa el ADC y muestra lecturas por consola
-// ─────────────────────────────────────────────────────────────
+/******************************************************************************
+ * EJEMPLO ADC
+ * Lectura de temperatura usando LM35
+ ******************************************************************************/
 
 #include <stdio.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#include "adc_lib.h"
+#include "adc_service.h"
 
 void app_main(void)
 {
-    adc_lib_init();
+    /* ---------------- INICIALIZACIÓN ---------------- */
 
-    while (1) {
-        int raw = adc_lib_read_raw();
-        int mv = adc_lib_read_mv();
-        float percent = adc_lib_read_percent();
+    adc_service_init();
 
-        printf("RAW: %d | mV: %d | Porcentaje: %.2f %%\n",
-               raw,
-               mv,
-               percent);
+    /* ---------------- LOOP PRINCIPAL ---------------- */
 
-        vTaskDelay(pdMS_TO_TICKS(500));
+    while(1)
+    {
+        float temperatura =
+            adc_read_lm35();
+
+        printf(
+            "Temperatura: %.2f °C\n",
+            temperatura
+        );
+
+        vTaskDelay(
+            pdMS_TO_TICKS(1000)
+        );
     }
 }
