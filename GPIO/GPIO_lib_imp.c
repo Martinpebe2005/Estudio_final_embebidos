@@ -17,7 +17,7 @@
 
 // ─────────────────────────────────────────────────────────────
 // VARIABLE GLOBAL
-// Guarda el estado actual del GPIO.
+// Guarda el estado actual de la salida.
 // ─────────────────────────────────────────────────────────────
 
 static int gpio_state = 0;
@@ -25,13 +25,30 @@ static int gpio_state = 0;
 // ─────────────────────────────────────────────────────────────
 // gpio_lib_init()
 // Configura el GPIO como salida digital.
-// Debe ejecutarse una sola vez.
+// Debe ejecutarse una sola vez al iniciar el programa.
 // ─────────────────────────────────────────────────────────────
 
 void gpio_lib_init(void)
 {
-    gpio_set_direction(OUTPUT_GPIO, GPIO_MODE_OUTPUT);
+    gpio_config_t out_cfg = {
 
+        // GPIO utilizado como salida
+        .pin_bit_mask = (1ULL << OUTPUT_GPIO),
+
+        // Modo salida
+        .mode = GPIO_MODE_OUTPUT,
+
+        // Pull-up y pull-down deshabilitados
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+
+        // Sin interrupciones
+        .intr_type = GPIO_INTR_DISABLE
+    };
+
+    gpio_config(&out_cfg);
+
+    // Estado inicial apagado
     gpio_set_level(OUTPUT_GPIO, 0);
 
     gpio_state = 0;
@@ -63,7 +80,7 @@ void gpio_lib_off(void)
 
 // ─────────────────────────────────────────────────────────────
 // gpio_lib_toggle()
-// Invierte el estado actual del GPIO.
+// Invierte el estado actual de la salida.
 // ─────────────────────────────────────────────────────────────
 
 void gpio_lib_toggle(void)
