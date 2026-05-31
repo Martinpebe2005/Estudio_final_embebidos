@@ -12,6 +12,12 @@
 
 static const char *TAG = "BME280";
 
+//inicializo el i2c
+
+void bme280_service_init(void){
+    i2c_driver_init();
+}
+
 //Funcion de lectura de los datos del sensor
 
 void bme280_Leer_datos(void){
