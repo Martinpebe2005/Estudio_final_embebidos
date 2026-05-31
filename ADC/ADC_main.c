@@ -8,7 +8,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#include "adc_service.h"
+#include "ADC_services.h"
 
 void app_main(void)
 {

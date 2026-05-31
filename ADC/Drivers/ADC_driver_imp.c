@@ -3,7 +3,7 @@
  * Maneja directamente el hardware ADC del ESP32
  ******************************************************************************/
 
-#include "adc_driver.h"
+#include "ADC_driver.h"
 
 #include "esp_adc/adc_oneshot.h"
 #include "esp_adc/adc_cali.h"
