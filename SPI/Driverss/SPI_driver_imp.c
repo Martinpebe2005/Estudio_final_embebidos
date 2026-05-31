@@ -4,6 +4,7 @@
 // Pines usados para SPI
 
 #define PIN_MOSI  32
+#define PIN_MISO  35
 #define PIN_CLK   25
 #define PIN_CS    33
 
@@ -19,7 +20,7 @@ void spi_driver_init(void)
 {
     spi_bus_config_t bus = {
         .mosi_io_num   = PIN_MOSI,
-        .miso_io_num   = -1,
+        .miso_io_num   = PIN_MISO,
         .sclk_io_num   = PIN_CLK,
         .quadwp_io_num = -1,
         .quadhd_io_num = -1,
@@ -53,4 +54,53 @@ void spi_driver_write_16(uint8_t byte_alto, uint8_t byte_bajo)
     };
 
     spi_device_transmit(spi_device, &t);
+}
+
+// Envía un byte por SPI
+
+void spi_driver_write_8(uint8_t data)
+{
+    spi_transaction_t t = {
+        .length    = 8,
+        .tx_buffer = &data,
+    };
+
+    spi_device_transmit(spi_device, &t);
+}
+
+/* ---------------- LECTURA ---------------- */
+// Lee un byte por SPI enviando un byte dummy
+
+uint8_t spi_driver_read_8(void)
+{
+    uint8_t tx_dummy = 0x00;
+    uint8_t rx_data = 0x00;
+
+    spi_transaction_t t = {
+        .length    = 8,
+        .tx_buffer = &tx_dummy,
+        .rx_buffer = &rx_data,
+    };
+
+    spi_device_transmit(spi_device, &t);
+
+    return rx_data;
+}
+
+/* ---------------- TRANSFERENCIA ---------------- */
+// Envía un byte y al mismo tiempo recibe un byte
+
+uint8_t spi_driver_transfer_8(uint8_t data)
+{
+    uint8_t rx_data = 0x00;
+
+    spi_transaction_t t = {
+        .length    = 8,
+        .tx_buffer = &data,
+        .rx_buffer = &rx_data,
+    };
+
+    spi_device_transmit(spi_device, &t);
+
+    return rx_data;
 }

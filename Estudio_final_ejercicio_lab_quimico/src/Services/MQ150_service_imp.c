@@ -1,7 +1,7 @@
 #include "adc_service.h"
 #include "adc_driver.h"
 
-void adc_service_init(void){
+void MQ150_service_init(void){
     adc_driver_init();
 }
 
