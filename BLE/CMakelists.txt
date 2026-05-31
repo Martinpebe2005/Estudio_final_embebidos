@@ -1,0 +1,13 @@
+
+##añadir el componente a la build en platformio.ini
+idf_component_register(
+    SRCS 
+        "main.c"
+        "drivers/led_driver/led_driver.c"
+        "services/ble_service/ble_service.c"
+    INCLUDE_DIRS 
+        "."
+        "drivers/led_driver"
+        "services/ble_service"
+    REQUIRES bt nvs_flash driver
+)
