@@ -39,6 +39,16 @@ void uart_driver_send_string(const char *msg)
     uart_write_bytes(UART_PORT, msg, strlen(msg));
 }
 
+// Envía valores numéricos al PC
+
+void uart_driver_send_values(float valor1, float valor2)
+{
+    char msg[64];
+
+    sprintf(msg, "V1:%.2f V2:%.2f\n", valor1, valor2);
+
+    uart_write_bytes(UART_PORT, msg, strlen(msg));
+}
 /* ---------------- LECTURA ---------------- */
 // Lee datos recibidos por UART
 

@@ -8,6 +8,7 @@
 
 void uart_driver_init(void);
 void uart_driver_send_string(const char *msg);
+void uart_driver_send_values(float valor1, float valor2);
 int uart_driver_read_line(char *buffer, int max_len);
 
 #endif
