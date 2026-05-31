@@ -1,0 +1,192 @@
+
+PROYECTO FINAL – SISTEMA DE MONITOREO DE CALIDAD DE AIRE PARA LABORATORIO QUÍMICO
+==================================================================================
+
+DESCRIPCIÓN
+-----------
+Un laboratorio necesita un sistema con ESP32 que mida condiciones ambientales,
+detecte gases, active ventilación y reporte datos a PC y dispositivos móviles.
+
+HARDWARE OBLIGATORIO
+--------------------
+
+1. SENSOR AMBIENTAL BME280
+   Interfaz: I2C
+
+   Debes buscar en el datasheet:
+   - Dirección I2C
+   - Registros de temperatura, presión y humedad
+   - Registros de calibración
+   - Fórmulas de compensación
+
+2. SENSOR DE GAS MQ-135
+   Interfaz: ADC
+
+   Debes investigar:
+   - Alimentación
+   - Salida analógica
+   - Tiempo de calentamiento
+   - Relación entre voltaje y concentración aproximada
+   - Acondicionamiento si aplica
+
+3. PANTALLA OLED SSD1306 128x64
+   Interfaz: I2C o SPI
+
+   Debes buscar:
+   - Comandos de inicialización
+   - Dirección I2C o configuración SPI
+   - Envío de comandos y datos
+
+4. BUZZER PASIVO
+   Interfaz: PWM
+
+   Debe generar distintos tonos según el nivel de peligro.
+
+5. BOTÓN FÍSICO
+   Interfaz: GPIO + interrupción
+
+   Sirve para silenciar la alarma temporalmente.
+
+6. EEPROM AT24C32
+   Interfaz: I2C
+
+   Debe almacenar:
+   - Umbral de gas
+   - Último estado de alarma
+   - Contador de eventos
+
+PROBLEMA REAL
+-------------
+El sistema debe monitorear un laboratorio y activar alarmas cuando exista una
+posible contaminación del aire.
+
+REQUISITOS DEL FIRMWARE
+-----------------------
+
+1. LECTURA AMBIENTAL
+
+   Cada 1 segundo leer del BME280:
+
+   - Temperatura
+   - Humedad
+   - Presión
+
+   Usar I2C y manejo de registros.
+
+2. LECTURA DE GAS
+
+   Leer MQ-135 mediante ADC.
+
+   Convertir:
+
+   adc_raw -> voltaje -> nivel relativo de gas
+
+   Clasificar:
+
+   - NORMAL
+   - PRECAUCIÓN
+   - PELIGRO
+
+3. PANTALLA OLED
+
+   Mostrar:
+
+   TEMP: 25.4 C
+   HUM:  60 %
+   GAS:  PRECAUCION
+   ALARM: ON
+
+4. BUZZER POR PWM
+
+   - NORMAL: apagado
+   - PRECAUCIÓN: beep lento
+   - PELIGRO: beep rápido/agudo
+
+5. VENTILADOR POR PWM
+
+   - NORMAL: 20%
+   - PRECAUCIÓN: 60%
+   - PELIGRO: 100%
+
+6. BOTÓN CON INTERRUPCIÓN
+
+   Al presionar:
+
+   - Silenciar buzzer durante 30 segundos
+   - Guardar evento en EEPROM
+
+   La ISR solo debe activar una bandera.
+
+7. UART
+
+   Comandos:
+
+   STATUS
+   SET_GAS:700
+   MUTE
+   RESET_EVENTS
+
+   Respuesta ejemplo:
+
+   TEMP=25.4,HUM=60,GAS=720,STATE=PRECAUCION,EVENTS=3
+
+8. BLE (BLUETOOTH LOW ENERGY)
+
+   Cada 2 segundos enviar mediante una característica BLE:
+
+   LAB_AIR,TEMP=25.4,HUM=60,GAS=720,STATE=PRECAUCION
+
+9. TIMERS
+
+   Utilizar timers para:
+
+   - Muestreo cada 1 segundo
+   - Envío BLE cada 2 segundos
+   - Control de mute de 30 segundos
+   - Patrón de beep
+
+ARQUITECTURA OBLIGATORIA
+------------------------
+
+main
+│
+├── drivers
+│   ├── bme280_driver
+│   ├── mq135_driver
+│   ├── oled_driver
+│   ├── buzzer_driver
+│   ├── fan_driver
+│   ├── button_driver
+│   ├── eeprom_driver
+│   ├── uart_driver
+│   └── ble_driver
+│
+└── services
+    ├── air_quality_service
+    ├── alarm_service
+    ├── display_service
+    ├── config_service
+    └── communication_service
+
+ENTREGABLES
+-----------
+
+1. Diagrama de bloques.
+2. Tabla de pines.
+3. Resumen de datasheets.
+4. Código por capas.
+5. app_main() integrando todo.
+6. Explicación de interrupciones.
+7. Explicación de timers.
+8. Pruebas por UART.
+9. Pruebas de alarma.
+10. Conclusiones técnicas.
+
+NIVEL DE DIFICULTAD
+-------------------
+
+10/10
+
+Este ejercicio obliga a trabajar desde cero con hardware real,
+lectura de datasheets, registros, ADC, PWM, I2C, UART, BLE,
+interrupciones, timers, EEPROM y arquitectura de firmware.
