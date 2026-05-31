@@ -1,0 +1,376 @@
+# CHULETA GIT BASH + GIT
+
+## NAVEGACIÓN
+
+Ver carpeta actual:
+
+```bash
+pwd
+```
+
+Listar archivos:
+
+```bash
+ls
+```
+
+Entrar a una carpeta:
+
+```bash
+cd carpeta
+```
+
+Subir una carpeta:
+
+```bash
+cd ..
+```
+
+Volver al home:
+
+```bash
+cd ~
+```
+
+Limpiar pantalla:
+
+```bash
+clear
+```
+
+---
+
+## CREAR ARCHIVOS Y CARPETAS
+
+Crear carpeta:
+
+```bash
+mkdir nombre
+```
+
+Crear carpetas anidadas:
+
+```bash
+mkdir -p lib/ADC
+```
+
+Crear archivo vacío:
+
+```bash
+touch archivo.c
+```
+
+Ejemplo:
+
+```bash
+touch lib/ADC/adc.c
+touch lib/ADC/adc.h
+```
+
+---
+
+## GIT - CONFIGURACIÓN
+
+Ver usuario:
+
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+Configurar usuario:
+
+```bash
+git config --global user.name "Tu Nombre"
+git config --global user.email "correo@ejemplo.com"
+```
+
+---
+
+## CREAR REPOSITORIO
+
+Inicializar repositorio:
+
+```bash
+git init
+```
+
+Ver estado:
+
+```bash
+git status
+```
+
+Agregar todos los archivos:
+
+```bash
+git add .
+```
+
+Agregar un archivo:
+
+```bash
+git add main.c
+```
+
+Crear commit:
+
+```bash
+git commit -m "Primer commit"
+```
+
+---
+
+## CONECTAR CON GITHUB
+
+Ver repositorios remotos:
+
+```bash
+git remote -v
+```
+
+Agregar remoto:
+
+```bash
+git remote add origin URL
+```
+
+Ejemplo:
+
+```bash
+git remote add origin https://github.com/usuario/proyecto.git
+```
+
+Cambiar URL remota:
+
+```bash
+git remote set-url origin URL
+```
+
+---
+
+## SUBIR CAMBIOS
+
+Primer push:
+
+```bash
+git push -u origin main
+```
+
+Push normal:
+
+```bash
+git push
+```
+
+Push especificando rama:
+
+```bash
+git push origin main
+```
+
+---
+
+## DESCARGAR CAMBIOS
+
+Traer cambios:
+
+```bash
+git pull
+```
+
+Traer cambios usando rebase:
+
+```bash
+git pull --rebase origin main
+```
+
+---
+
+## VER HISTORIAL
+
+Ver historial resumido:
+
+```bash
+git log --oneline
+```
+
+Ver historial gráfico:
+
+```bash
+git log --oneline --graph --all
+```
+
+Ver último commit:
+
+```bash
+git show
+```
+
+---
+
+## DESCARTAR CAMBIOS
+
+Ver archivos modificados:
+
+```bash
+git status
+```
+
+Descartar cambios de un archivo:
+
+```bash
+git restore archivo.c
+```
+
+Descartar todos los cambios:
+
+```bash
+git restore .
+```
+
+---
+
+## STAGING
+
+Quitar archivo del staging:
+
+```bash
+git restore --staged archivo.c
+```
+
+Quitar todo del staging:
+
+```bash
+git restore --staged .
+```
+
+---
+
+## COMMITS
+
+Deshacer último commit conservando cambios:
+
+```bash
+git reset --soft HEAD~1
+```
+
+Deshacer último commit dejando archivos modificados:
+
+```bash
+git reset HEAD~1
+```
+
+Eliminar último commit completamente:
+
+```bash
+git reset --hard HEAD~1
+```
+
+---
+
+## RAMAS
+
+Ver ramas:
+
+```bash
+git branch
+```
+
+Crear rama:
+
+```bash
+git branch pruebas
+```
+
+Cambiar de rama:
+
+```bash
+git checkout pruebas
+```
+
+Crear y cambiar:
+
+```bash
+git checkout -b pruebas
+```
+
+Volver a main:
+
+```bash
+git checkout main
+```
+
+Eliminar rama:
+
+```bash
+git branch -D pruebas
+```
+
+---
+
+## CLONAR REPOSITORIOS
+
+Clonar:
+
+```bash
+git clone URL
+```
+
+Ejemplo:
+
+```bash
+git clone https://github.com/usuario/proyecto.git
+```
+
+---
+
+## FORCE PUSH (USAR CON CUIDADO)
+
+Sobrescribir GitHub con tu versión local:
+
+```bash
+git push --force origin main
+```
+
+---
+
+## COMANDOS QUE MÁS USARÁS
+
+Ver estado:
+
+```bash
+git status
+```
+
+Guardar cambios:
+
+```bash
+git add .
+git commit -m "Descripción"
+git push
+```
+
+Actualizar desde GitHub:
+
+```bash
+git pull --rebase origin main
+```
+
+Ver historial:
+
+```bash
+git log --oneline --graph --all
+```
+
+Eliminar cambios locales:
+
+```bash
+git restore .
+```
+
+Eliminar último commit:
+
+```bash
+git reset --hard HEAD~1
+```
